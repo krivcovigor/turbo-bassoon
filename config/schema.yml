@@ -1,0 +1,39 @@
+Category:  
+  actAs:  
+    DmSortable:  
+    Timestampable: ~  
+  columns:  
+    id:  { type: integer, notnull: true }
+    name: { type: string(255), notnull: true, unique: true }
+
+Goods:  
+  actAs:  
+    Timestampable: ~  
+    DmSortable:  
+    DmCommentable:
+  columns:  
+    id:  { type: integer, notnull: true }
+    name: { type: string(255), notnull: true, unique: true }
+relations:  
+    Category:
+      class:          Category
+      refClass:       CategoryGoods
+      local:          goods_id
+      foreign:        category_id
+      foreignAlias:   Goods
+
+CategoryGoods:  
+  columns:  
+    category_id:      { type: integer, primary: true }  
+    goods_id:       { type: integer, primary: true }  
+  relations:  
+    Category:  
+      local: category_id  
+      foreign: id  
+      foreignAlias: CategoryGoods  
+      onDelete: CASCADE  
+    Goods:  
+      local: goods_id  
+      foreign: id  
+      foreignAlias: CategoryGoods 
+      onDelete: CASCADE  
